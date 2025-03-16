@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compress and optimize your images easily with our tool. Choose your compression level and enhance performance.">
+    <meta name="keywords" content="image compression, optimize images, compress photos, image tool">
+    <meta name="author" content="Your Name">
+    <title>Responsive Image Compression Tool</title>
+    
+    <!-- SEO and Performance Optimizations -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            max-width: 1200px;
+        }
+        .compression-tool {
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        input[type="file"] {
+            display: block;
+            margin-bottom: 1rem;
+        }
+        select {
+            margin: 1rem 0;
+        }
+        .output {
+            margin-top: 1rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+        }
+
+        /* AdSense Section */
+        .adsense-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 600px) {
+            .compression-tool {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Image Compression Tool</h1>
+    <p>Optimize your images and reduce file sizes easily.</p>
+</header>
+
+<div class="container">
+    <div class="compression-tool">
+        <h2>Choose your compression level and upload an image</h2>
+        
+        <input type="file" id="image-input" accept="image/*">
+        
+        <label for="compression-level">Compression Level:</label>
+        <select id="compression-level">
+            <option value="0.2">Low (20%)</option>
+            <option value="0.5">Medium (50%)</option>
+            <option value="0.8">High (80%)</option>
+        </select>
+        
+        <button onclick="compressImage()">Compress Image</button>
+
+        <div class="output">
+            <h3>Optimized Image</h3>
+            <img id="output-image" alt="Compressed Image will appear here" style="max-width: 100%; display: none;">
+        </div>
+    </div>
+
+    <!-- Google AdSense Ad Unit Placeholder -->
+    <div class="adsense-container">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXX"
+             data-ad-slot="XXXXXXX"
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Image Compression Tool. All Rights Reserved.</p>
+</footer>
+
+<!-- Include the image compression JavaScript library -->
+<script src="https://cdn.jsdelivr.net/npm/compressorjs@1.1.1/dist/compressor.min.js"></script>
+
+<script>
+    // Function to compress the image based on user selection
+    function compressImage() {
+        const fileInput = document.getElementById('image-input');
+        const compressionLevel = parseFloat(document.getElementById('compression-level').value);
+        const outputImage = document.getElementById('output-image');
+        
+        if (!fileInput.files.length) {
+            alert("Please upload an image first.");
+            return;
+        }
+
+        const file = fileInput.files[0];
+        
+        new Compressor(file, {
+            quality: compressionLevel, // Set the compression quality based on the selected level
+            success(result) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    outputImage.src = reader.result;
+                    outputImage.style.display = "block";
+                };
+                reader.readAsDataURL(result);
+            },
+            error(err) {
+                console.error("Compression Error: ", err);
+                alert("An error occurred during compression.");
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
